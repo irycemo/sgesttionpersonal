@@ -77,7 +77,7 @@
         </div>
 
         <div class="p-4 mb-5 bg-white shadow-lg rounded-lg text-center">
-{{ $errors }}
+
             <div class="flex justify-center">
 
                 <x-button-blue

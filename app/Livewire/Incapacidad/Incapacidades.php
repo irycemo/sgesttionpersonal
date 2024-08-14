@@ -9,6 +9,7 @@ use App\Models\Incapacidad;
 use Livewire\WithPagination;
 use App\Traits\ComponentesTrait;
 use Illuminate\Support\Facades\Log;
+use App\Services\JustificacionService;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
@@ -22,8 +23,6 @@ class Incapacidades extends Component
     public Incapacidad $modelo_editar;
 
     public $documento;
-    public $fecha_inicial;
-    public $fecha_final;
     public $personal;
 
     protected $queryString = ['search'];
@@ -70,7 +69,7 @@ class Incapacidades extends Component
 
         $incapacidad = Incapacidad::where('persona_id', $this->modelo_editar->persona_id)
                                     ->where('fecha_inicial', '<=', $this->modelo_editar->fecha_inicial)
-                                    ->where('fecha_final', '>=', $this->modelo_editar->fecha_inicial)
+                                    ->where('fecha_final', '>=', $this->modelo_editar->fecha_final)
                                     ->first();
 
         if($incapacidad){
@@ -95,11 +94,13 @@ class Incapacidades extends Component
 
             }
 
-            $inc = Incapacidad::latest()->first();
-
-            $this->modelo_editar->folio = $inc->folio ? $inc->folio + 1 : 0;
+            $this->modelo_editar->folio = (Incapacidad::max('folio') ?? 0) + 1;
             $this->modelo_editar->creado_por = auth()->user()->id;
             $this->modelo_editar->save();
+
+            (new JustificacionService())->justificarFalta($this->modelo_editar->persona_id, $this->modelo_editar->fecha_inicial, $this->modelo_editar->fecha_final, 'Se justifica falta mediante registro de incapacidad con folio: ' . $this->modelo_editar->folio);
+
+            (new JustificacionService())->justificarRetardo($this->modelo_editar->persona_id, $this->modelo_editar->fecha_inicial, $this->modelo_editar->fecha_final, 'Se justifica retardo mediante registro de incapacidad con folio: ' . $this->modelo_editar->folio);
 
             $this->resetearTodo();
 
@@ -134,6 +135,10 @@ class Incapacidades extends Component
 
             $this->modelo_editar->actualizado_por = auth()->user()->id;
             $this->modelo_editar->save();
+
+            (new JustificacionService())->justificarFalta($this->modelo_editar->persona_id, $this->modelo_editar->fecha_inicial, $this->modelo_editar->fecha_final, 'Se justifica falta mediante registro de incapacidad con folio: ' . $this->modelo_editar->folio);
+
+            (new JustificacionService())->justificarRetardo($this->modelo_editar->persona_id, $this->modelo_editar->fecha_inicial, $this->modelo_editar->fecha_final, 'Se justifica retardo mediante registro de incapacidad con folio: ' . $this->modelo_editar->folio);
 
             $this->resetearTodo();
 

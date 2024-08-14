@@ -10,7 +10,7 @@ class ManualController extends Controller
 
     public function __invoke()
     {
-        return view('manual');
+        return view('manual.manual');
     }
 
 }

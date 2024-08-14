@@ -8,6 +8,15 @@ use App\Models\Justificacion;
 
 class JustificacionService{
 
+    public function justificar(int $personaId, string $fechaInicial, string $fechaFinal, string $observaciones):void
+    {
+
+        $this->justificarFalta($personaId, $fechaInicial, $fechaFinal, $observaciones);
+
+        $this->justificarRetardo($personaId, $fechaInicial, $fechaFinal, $observaciones);
+
+    }
+
     public function justificarFalta(int $personaId, string $fechaInicial, string $fechaFinal, string $observaciones):void
     {
 
@@ -44,14 +53,16 @@ class JustificacionService{
 
     }
 
-    public function crearJustificacion(int $personaId, string $observaciones){
+    public function crearJustificacion(int $personaId, string $observaciones):int
+    {
 
         return Justificacion::create([
-                    'folio' => Justificacion::max('folio') ?? 0,
+                    'folio' => (Justificacion::max('folio') ?? 0) + 1,
                     'persona_id' => $personaId,
                     'observaciones' => $observaciones,
                     'creado_por' => auth()->id()
                 ])->id;
+
     }
 
 }

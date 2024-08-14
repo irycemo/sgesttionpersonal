@@ -14,7 +14,7 @@ class Inhabil extends Model
 
     protected $fillable = ['fecha','descripcion', 'creado_por', 'actualizado_por'];
 
-    public function getFechaAttribute(){
+    public function getFechaFormateadaAttribute(){
         return Carbon::createFromFormat('Y-m-d', $this->attributes['fecha'])->format('d-m-Y');
     }
 }

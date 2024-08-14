@@ -148,7 +148,7 @@
 
                                 <div x-cloak x-show="open_drop_down" x-on:click="open_drop_down=false" x-on:click.away="open_drop_down=false" class="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
 
-                                    @can('Editar horario')
+                                    @can('Editar incapacidad')
 
                                         <button
                                             wire:click="abrirModalEditar({{ $incapacidad->id }})"
@@ -160,7 +160,7 @@
 
                                     @endcan
 
-                                    @can('Borrar horario')
+                                    @can('Borrar incapacidad')
 
                                         <button
                                             wire:click="abrirModalBorrar({{ $incapacidad->id }})"
@@ -276,7 +276,7 @@
 
             <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
 
-                <x-input-group for="modelo_editar.observaciones" label="Fecha final" :error="$errors->first('modelo_editar.observaciones')" class="w-full">
+                <x-input-group for="modelo_editar.observaciones" label="Observaciones" :error="$errors->first('modelo_editar.observaciones')" class="w-full">
 
                     <textarea class="bg-white rounded text-sm w-full" wire:model.defer="modelo_editar.observaciones">{{ $modelo_editar->observaciones }}</textarea>
 
@@ -345,11 +345,11 @@
     <x-confirmation-modal wire:model="modalBorrar" maxWidth="sm">
 
         <x-slot name="title">
-            Eliminar horario
+            Eliminar incapacidad
         </x-slot>
 
         <x-slot name="content">
-            ¿Esta seguro que desea eliminar el horario? No sera posible recuperar la información.
+            ¿Esta seguro que desea eliminar la incapacidad? No sera posible recuperar la información.
         </x-slot>
 
         <x-slot name="footer">

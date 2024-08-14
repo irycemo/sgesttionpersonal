@@ -2,7 +2,7 @@
 
 @section('content')
 
-    {{-- <div class=" mb-10">
+    <div class=" mb-10">
 
         <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500  mb-6  bg-white">Estadisticas del mes actual</h2>
 
@@ -124,7 +124,7 @@
 
                 </div>
 
-                @livewire('admin.ver-inasistencia', ['localidad' => 'Catastro' ,'personalTotal' => $personalCatastroTotal, 'personalPresente' => $personalCatastroPresente])
+                @livewire('dashboard.ver-inasistencia', ['localidad' => 'Catastro' ,'personalTotal' => $personalCatastroTotal, 'personalPresente' => $personalCatastroPresente])
 
             </div>
 
@@ -144,7 +144,7 @@
 
                 </div>
 
-                @livewire('admin.ver-inasistencia', ['localidad' => 'RPP' ,'personalTotal' => $personalRPPTotal, 'personalPresente' => $personalRppPresente])
+                @livewire('dashboard.ver-inasistencia', ['localidad' => 'RPP' ,'personalTotal' => $personalRPPTotal, 'personalPresente' => $personalRppPresente])
 
             </div>
 
@@ -164,7 +164,7 @@
 
                 </div>
 
-                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 1' ,'personalTotal' => $personalRegional1Total, 'personalPresente' => $personalRegional1Presente])
+                @livewire('dashboard.ver-inasistencia', ['localidad' => 'Regional 1' ,'personalTotal' => $personalRegional1Total, 'personalPresente' => $personalRegional1Presente])
 
             </div>
 
@@ -184,7 +184,7 @@
 
                 </div>
 
-                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 2' ,'personalTotal' => $personalRegional2Total, 'personalPresente' => $personalRegional2Presente])
+                @livewire('dashboard.ver-inasistencia', ['localidad' => 'Regional 2' ,'personalTotal' => $personalRegional2Total, 'personalPresente' => $personalRegional2Presente])
 
             </div>
 
@@ -204,7 +204,7 @@
 
                 </div>
 
-                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 3' ,'personalTotal' => $personalRegional3Total, 'personalPresente' => $personalRegional3Presente])
+                @livewire('dashboard.ver-inasistencia', ['localidad' => 'Regional 3' ,'personalTotal' => $personalRegional3Total, 'personalPresente' => $personalRegional3Presente])
 
             </div>
 
@@ -224,7 +224,7 @@
 
                 </div>
 
-                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 4' ,'personalTotal' => $personalRegional4Total, 'personalPresente' => $personalRegional4Presente])
+                @livewire('dashboard.ver-inasistencia', ['localidad' => 'Regional 4' ,'personalTotal' => $personalRegional4Total, 'personalPresente' => $personalRegional4Presente])
 
             </div>
 
@@ -244,7 +244,7 @@
 
                 </div>
 
-                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 5' ,'personalTotal' => $personalRegional5Total, 'personalPresente' => $personalRegional5Presente])
+                @livewire('dashboard.ver-inasistencia', ['localidad' => 'Regional 5' ,'personalTotal' => $personalRegional5Total, 'personalPresente' => $personalRegional5Presente])
 
             </div>
 
@@ -264,7 +264,7 @@
 
                 </div>
 
-                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 6' ,'personalTotal' => $personalRegional6Total, 'personalPresente' => $personalRegional6Presente])
+                @livewire('dashboard.ver-inasistencia', ['localidad' => 'Regional 6' ,'personalTotal' => $personalRegional6Total, 'personalPresente' => $personalRegional6Presente])
 
             </div>
 
@@ -284,14 +284,12 @@
 
                 </div>
 
-                @livewire('admin.ver-inasistencia', ['localidad' => 'Regional 7' ,'personalTotal' => $personalRegional7Total, 'personalPresente' => $personalRegional7Presente])
+                @livewire('dashboard.ver-inasistencia', ['localidad' => 'Regional 7' ,'personalTotal' => $personalRegional7Total, 'personalPresente' => $personalRegional7Presente])
 
             </div>
 
         </div>
 
-
-
-    </div> --}}
+    </div>
 
 @endsection

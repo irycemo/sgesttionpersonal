@@ -2,8 +2,16 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use App\Models\Falta;
+use App\Models\Persona;
+use App\Models\Retardo;
+use App\Models\Checador;
 use Illuminate\View\View;
+use App\Models\Incapacidad;
+use App\Models\Justificacion;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -11,11 +19,9 @@ class DashboardController extends Controller
     public function __invoke():View
     {
 
-        return view('dashboard');
+        $faltas = Falta::whereMonth('created_at', Carbon::now()->month)->count();
 
-        /* $faltas = Falta::whereMonth('created_at', Carbon::now()->month)->count();
-
-        $permisos = DB::table('permisos_persona')->whereMonth('created_at', Carbon::now()->month)->count();
+        $permisos = DB::table('permiso_persona')->whereMonth('created_at', Carbon::now()->month)->count();
 
         $retardos = Retardo::whereMonth('created_at', Carbon::now()->month)->count();
 
@@ -92,7 +98,7 @@ class DashboardController extends Controller
 
         }
 
-        return view('dashboard', compact(
+        return view('dashboard.dashboard', compact(
                                             'faltas',
                                             'permisos',
                                             'retardos',
@@ -119,7 +125,7 @@ class DashboardController extends Controller
                                         )
                     );
 
-                    */
+
     }
 
 }

@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use Livewire\Livewire;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +23,32 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+
+        Model::shouldBeStrict();
+
+        if(env('LOCAL') === "1"){
+
+            URL::forceScheme('https');
+
+            Livewire::setScriptRoute(function ($handle) {
+                return Route::get('/sgettionpersonal/public/vendor/livewire/livewire.js', $handle);
+            });
+
+            Livewire::setUpdateRoute(function ($handle) {
+                return Route::post('/sgettionpersonal/public/livewire/update', $handle);
+            });
+
+        }elseif(env('LOCAL') === "0"){
+
+            Livewire::setScriptRoute(function ($handle) {
+                return Route::get('/sgettionpersonal/public/vendor/livewire/livewire.js', $handle);
+            });
+
+            Livewire::setUpdateRoute(function ($handle) {
+                return Route::post('/sgettionpersonal/public/livewire/update', $handle);
+            });
+
+        }
+
     }
 }

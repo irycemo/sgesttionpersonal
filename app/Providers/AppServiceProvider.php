@@ -31,21 +31,21 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
 
             Livewire::setScriptRoute(function ($handle) {
-                return Route::get('/sgettionpersonal/public/vendor/livewire/livewire.js', $handle);
+                return Route::get('/sgesttionpersonal/public/vendor/livewire/livewire.js', $handle);
             });
 
             Livewire::setUpdateRoute(function ($handle) {
-                return Route::post('/sgettionpersonal/public/livewire/update', $handle);
+                return Route::post('/sgesttionpersonal/public/livewire/update', $handle);
             });
 
         }elseif(env('LOCAL') === "0"){
 
             Livewire::setScriptRoute(function ($handle) {
-                return Route::get('/sgettionpersonal/public/vendor/livewire/livewire.js', $handle);
+                return Route::get('/sgesttionpersonal/public/vendor/livewire/livewire.js', $handle);
             });
 
             Livewire::setUpdateRoute(function ($handle) {
-                return Route::post('/sgettionpersonal/public/livewire/update', $handle);
+                return Route::post('/sgesttionpersonal/public/livewire/update', $handle);
             });
 
         }

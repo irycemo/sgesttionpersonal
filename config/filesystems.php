@@ -68,7 +68,7 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/personal'),
             'url' => env('APP_URL').'/personal',
-            'visibility' => 'private',
+            'visibility' => 'public',
             'throw' => false,
         ],
 

@@ -143,7 +143,7 @@ class Personal extends Component
 
             if($this->foto){
 
-                Storage::disk('personal')->delete($this->modelo_editar->foto);
+                if($this->modelo_editar->foto) Storage::disk('personal')->delete($this->modelo_editar->foto);
 
                 $nombreArchivo = $this->foto->store('/', 'personal');
 

@@ -82,13 +82,17 @@
 
                         </x-table.cell>
 
-                        <x-table.cell>
+                        @if (auth()->user()->hasRole('Administrador'))
 
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Código de barras<</span>
+                            <x-table.cell>
 
-                            {{ $persona->codigo_barras }}
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Código de barras<</span>
 
-                        </x-table.cell>
+                                {{ $persona->codigo_barras }}
+
+                            </x-table.cell>
+
+                        @endif
 
                         <x-table.cell>
 

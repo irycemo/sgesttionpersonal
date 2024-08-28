@@ -105,7 +105,6 @@ return [
     'hosts' => [
         'local' => [
             'name' => ucfirst(env('APP_ENV', 'local')),
-            'host' => 'http://10.0.32.33:8083',
         ],
 
         // 'staging' => [

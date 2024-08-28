@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Resources\EmpleadoResource;
 use Livewire\Livewire;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        EmpleadoResource::withoutWrapping();
 
         Model::shouldBeStrict();
 

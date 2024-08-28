@@ -86,7 +86,7 @@ return [
     */
 
     'api_middleware' => [
-        /* \Opcodes\LogViewer\Http\Middleware\EnsureFrontendRequestsAreStateful::class, */
+        \Opcodes\LogViewer\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         \Opcodes\LogViewer\Http\Middleware\AuthorizeLogViewer::class,
     ],
 
@@ -105,6 +105,7 @@ return [
     'hosts' => [
         'local' => [
             'name' => ucfirst(env('APP_ENV', 'local')),
+            'host' => 'http://10.0.32.33:8083',
         ],
 
         // 'staging' => [

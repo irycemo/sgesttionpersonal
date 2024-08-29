@@ -29,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
 
         Model::shouldBeStrict();
 
+        URL::forceScheme('https');
+
         if(env('LOCAL') === "1"){
 
             URL::forceScheme('https');

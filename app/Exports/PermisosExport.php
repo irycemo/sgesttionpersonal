@@ -52,7 +52,7 @@ class PermisosExport implements FromCollection,  WithProperties, WithDrawings, S
                                     return $q->where('persona_id', $this->personaPermiso);
                                 })
                                 ->when (isset($this->permisoPermiso) && $this->permisoPermiso != "", function($q){
-                                    return $q->where('permisos_id', $this->permisoPermiso);
+                                    return $q->where('permiso_id', $this->permisoPermiso);
                                 })
                                 ->whereBetween('created_at', [$this->fecha1, $this->fecha2])
                                 ->get();

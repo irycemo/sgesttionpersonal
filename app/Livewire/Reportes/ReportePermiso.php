@@ -86,7 +86,7 @@ class ReportePermiso extends Component
                                             return $q->where('persona_id', $this->empleado_id);
                                         })
                                         ->when (isset($this->permisoPermiso) && $this->permisoPermiso != "", function($q){
-                                            return $q->where('permisos_id', $this->permisoPermiso);
+                                            return $q->where('permiso_id', $this->permisoPermiso);
                                         })
                                         ->whereBetween('created_at', [$this->fecha1 . ' 00:00:00', $this->fecha2 . ' 23:59:59'])
                                         ->paginate($this->pagination);

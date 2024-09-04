@@ -15,6 +15,7 @@
         "maatwebsite/excel": "^3.1",
         "opcodesio/log-viewer": "^3.10",
         "owen-it/laravel-auditing": "^13.6",
+        "rap2hpoutre/laravel-log-viewer": "^2.4",
         "spatie/laravel-permission": "^6.9"
     },
     "require-dev": {

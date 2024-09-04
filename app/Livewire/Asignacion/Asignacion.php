@@ -125,35 +125,43 @@ class Asignacion extends Component
 
     public function asignarPermisoOficial(){
 
-        $dias = $this->permiso_seleccionado->tiempo / 24;
+        if($this->permiso_seleccionado->tiempo > 24){
 
-        $final = Carbon::createFromFormat('Y-m-d', $this->fecha_inicial);
+            $dias = $this->permiso_seleccionado->tiempo / 24;
 
-        for ($i=0; $i < $dias; $i++) {
+            $final = Carbon::createFromFormat('Y-m-d', $this->fecha_inicial);
 
-            $final->addDay();
-
-            $inhabil = Inhabil::whereDate('fecha', $final->format('Y-m-d'))->first();
-
-            while($inhabil != null){
+            for ($i=0; $i < $dias; $i++) {
 
                 $final->addDay();
+
                 $inhabil = Inhabil::whereDate('fecha', $final->format('Y-m-d'))->first();
 
+                while($inhabil != null){
+
+                    $final->addDay();
+                    $inhabil = Inhabil::whereDate('fecha', $final->format('Y-m-d'))->first();
+
+                }
+
+                while($final->isWeekend()){
+
+                    $final->addDay();
+
+                }
+
             }
 
-            while($final->isWeekend()){
+        }else{
 
-                $final->addDay();
-
-            }
+            $final = Carbon::parse($this->fecha_inicial);
 
         }
 
         PermisoPersona::create([
             'creado_por' => auth()->id(),
             'fecha_inicio' => $this->fecha_inicial,
-            'fecha_final' => $final,
+            'fecha_final' => $final->toDateString(),
             'permiso_id' => $this->permiso_id,
             'persona_id' => $this->empleado_id
         ]);

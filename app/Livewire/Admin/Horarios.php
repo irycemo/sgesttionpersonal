@@ -21,7 +21,7 @@ class Horarios extends Component
     protected function rules(){
         return [
             'modelo_editar.descripcion' => 'required',
-            'modelo_editar.nombre' => 'required|unique:horarios,nombre,' . $this->selected_id,
+            'modelo_editar.nombre' => 'required|unique:horarios,nombre,' . $this->modelo_editar->id,
             'modelo_editar.lunes_entrada' => 'required',
             'modelo_editar.lunes_salida' => 'required|after:modelo_editar.lunes_entrada',
             'modelo_editar.martes_entrada' => 'required',

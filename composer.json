@@ -26,7 +26,7 @@
         "nunomaduro/collision": "^8.0",
         "pestphp/pest": "^2.0",
         "pestphp/pest-plugin-laravel": "^2.0",
-        "wire-elements/wire-spy": "^0.0.4"
+        "wire-elements/wire-spy": "^0.0.9"
     },
     "autoload": {
         "psr-4": {

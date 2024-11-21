@@ -88,13 +88,13 @@ class Asignacion extends Component
 
         } catch (Exception $ex) {
 
-            Log::error("Error al borrar usuario por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $ex);
+            Log::error("Error al asignar permiso por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $ex);
 
             $this->dispatch('mostrarMensaje', ['error', $ex->getMessage()]);
 
         } catch (\Throwable $th) {
 
-            Log::error("Error al borrar usuario por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th);
+            Log::error("Error al asignar permiso por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th);
             $this->dispatch('mostrarMensaje', ['error', "Ha ocurrido un error."]);
 
         }

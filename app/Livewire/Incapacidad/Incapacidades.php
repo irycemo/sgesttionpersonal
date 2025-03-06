@@ -183,7 +183,7 @@ class Incapacidades extends Component
 
         $this->personal = Persona::select('nombre', 'ap_paterno', 'ap_materno', 'id')
                                     ->where('status', 'activo')
-                                    ->when(!auth()->user()->hasRole('Administrador'), function($q){
+                                    ->when(!auth()->user()->hasRole(['Administrador', 'Contador(a)', 'Delegado(a) Administrativo(a)']), function($q){
                                         $q->where('localidad', auth()->user()->localidad);
                                     })
                                     ->orderBy('nombre')->get();

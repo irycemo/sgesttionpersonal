@@ -307,7 +307,7 @@ class Asignacion extends Component
         $this->permisos = Permiso::orderBy('descripcion')->get();
 
         $this->empleados = Persona::select('id', 'nombre', 'ap_paterno', 'ap_materno')
-                                        ->when(!auth()->user()->hasRole('Administrador'), function($q){
+                                        ->when(!auth()->user()->hasRole(['Administrador', 'Contador(a)', 'Delegado(a) Administrativo(a)']), function($q){
                                             $q->where('localidad', auth()->user()->localidad);
                                         })
                                         ->where('status', 'activo')

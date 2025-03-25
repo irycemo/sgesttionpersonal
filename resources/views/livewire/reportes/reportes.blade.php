@@ -16,6 +16,7 @@
                 <option value="faltas">Faltas</option>
                 <option value="retardos">Retardos</option>
                 <option value="checados">Checados</option>
+                <option value="incidencias">Incidencias</option>
 
             </x-input-select>
 
@@ -62,6 +63,12 @@
     @if ($verChecados)
 
         @livewire('reportes.reporte-checado', ['fecha1' => $this->fecha1, 'fecha2' => $this->fecha2])
+
+    @endif
+
+    @if ($verIncidencias)
+
+        @livewire('reportes.reporte-incidencias', ['fecha1' => $this->fecha1, 'fecha2' => $this->fecha2])
 
     @endif
 

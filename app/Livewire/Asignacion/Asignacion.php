@@ -135,18 +135,22 @@ class Asignacion extends Component
 
                 $final->addDay();
 
-                /* $inhabil = Inhabil::whereDate('fecha', $final->format('Y-m-d'))->first();
+                if($this->permiso_seleccionado->tiempo->dia_habil){
 
-                while($inhabil != null){
-
-                    $final->addDay();
                     $inhabil = Inhabil::whereDate('fecha', $final->format('Y-m-d'))->first();
 
-                } */
+                    while($inhabil != null){
 
-                while($final->isWeekend()){
+                        $final->addDay();
+                        $inhabil = Inhabil::whereDate('fecha', $final->format('Y-m-d'))->first();
 
-                    $final->addDay();
+                    }
+
+                    while($final->isWeekend()){
+
+                        $final->addDay();
+
+                    }
 
                 }
 

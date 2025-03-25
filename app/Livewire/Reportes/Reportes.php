@@ -11,13 +11,14 @@ class Reportes extends Component
     public $fecha1;
     public $fecha2;
 
-    public $verPermisos;
-    public $verIncapacidades;
-    public $verJustificaciones;
-    public $verPersonal;
-    public $verFaltas;
-    public $verRetardos;
-    public $verChecados;
+    public $verPermisos = false;
+    public $verIncapacidades = false;
+    public $verJustificaciones = false;
+    public $verPersonal = false;
+    public $verFaltas = false;
+    public $verRetardos = false;
+    public $verChecados = false;
+    public $verIncidencias = false;
 
     protected function rules(){
         return [
@@ -35,6 +36,7 @@ class Reportes extends Component
 
         if($this->area == 'inasistencias'){
 
+
             $this->verPermisos = false;
             $this->verIncapacidades = false;
             $this->verJustificaciones = false;
@@ -42,76 +44,119 @@ class Reportes extends Component
             $this->verRetardos = false;
             $this->verFaltas = false;
             $this->verChecados = false;
+            $this->verIncidencias = false;
 
         }elseif($this->area == 'permisos'){
 
+            $this->reset([
+                'verIncapacidades',
+                'verJustificaciones',
+                'verPersonal',
+                'verFaltas',
+                'verChecados',
+                'verRetardos',
+                'verIncidencias',
+            ]);
+
             $this->verPermisos = true;
-            $this->verIncapacidades = false;
-            $this->verJustificaciones = false;
-            $this->verPersonal = false;
-            $this->verRetardos = false;
-            $this->verFaltas = false;
-            $this->verChecados = false;
 
         }elseif($this->area == 'incapacidades'){
 
-            $this->verPermisos = false;
+            $this->reset([
+                'verPermisos',
+                'verJustificaciones',
+                'verPersonal',
+                'verFaltas',
+                'verChecados',
+                'verRetardos',
+                'verIncidencias',
+            ]);
+
             $this->verIncapacidades = true;
-            $this->verJustificaciones = false;
-            $this->verPersonal = false;
-            $this->verRetardos = false;
-            $this->verFaltas = false;
-            $this->verChecados = false;
 
         }elseif($this->area == 'justificaciones'){
 
-            $this->verPermisos = false;
-            $this->verIncapacidades = false;
+            $this->reset([
+                'verPermisos',
+                'verIncapacidades',
+                'verPersonal',
+                'verFaltas',
+                'verChecados',
+                'verRetardos',
+                'verIncidencias',
+            ]);
+
             $this->verJustificaciones = true;
-            $this->verPersonal = false;
-            $this->verRetardos = false;
-            $this->verFaltas = false;
-            $this->verChecados = false;
 
         }elseif($this->area == 'personal'){
 
-            $this->verPermisos = false;
-            $this->verIncapacidades = false;
-            $this->verJustificaciones = false;
+            $this->reset([
+                'verPermisos',
+                'verIncapacidades',
+                'verJustificaciones',
+                'verFaltas',
+                'verChecados',
+                'verRetardos',
+                'verIncidencias',
+            ]);
+
             $this->verPersonal = true;
-            $this->verRetardos = false;
-            $this->verFaltas = false;
-            $this->verChecados = false;
 
         }elseif($this->area == 'faltas'){
 
-            $this->verPermisos = false;
-            $this->verIncapacidades = false;
-            $this->verJustificaciones = false;
-            $this->verPersonal = false;
-            $this->verRetardos = false;
+            $this->reset([
+                'verPermisos',
+                'verIncapacidades',
+                'verJustificaciones',
+                'verPersonal',
+                'verChecados',
+                'verRetardos',
+                'verIncidencias',
+            ]);
+
             $this->verFaltas = true;
-            $this->verChecados = false;
 
         }elseif($this->area == 'retardos'){
 
-            $this->verPermisos = false;
-            $this->verIncapacidades = false;
-            $this->verJustificaciones = false;
-            $this->verPersonal = false;
+            $this->reset([
+                'verPermisos',
+                'verIncapacidades',
+                'verJustificaciones',
+                'verPersonal',
+                'verChecados',
+                'verFaltas',
+                'verIncidencias',
+            ]);
+
             $this->verRetardos = true;
-            $this->verFaltas = false;
-            $this->verChecados = false;
 
         }elseif($this->area == 'checados'){
 
-            $this->verPermisos = false;
-            $this->verIncapacidades = false;
-            $this->verJustificaciones = false;
-            $this->verPersonal = false;
-            $this->verRetardos = false;
-            $this->verFaltas = false;
+            $this->reset([
+                'verPermisos',
+                'verIncapacidades',
+                'verJustificaciones',
+                'verPersonal',
+                'verRetardos',
+                'verFaltas',
+                'verIncidencias',
+            ]);
+
             $this->verChecados = true;
+
+        }elseif($this->area == 'incidencias'){
+
+            $this->reset([
+                'verPermisos',
+                'verIncapacidades',
+                'verJustificaciones',
+                'verPersonal',
+                'verRetardos',
+                'verFaltas',
+                'verChecados',
+            ]);
+
+            $this->verIncidencias = true;
 
         }
 

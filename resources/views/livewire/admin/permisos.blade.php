@@ -260,7 +260,7 @@
 
             </div>
 
-            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3">
 
                 <x-input-group for="modelo_editar.descripcion" label="Descripción" :error="$errors->first('modelo_editar.descripcion')" class="w-full">
 
@@ -269,6 +269,12 @@
                 </x-input-group>
 
             </div>
+
+            <x-input-group for="modelo_editar.dia_habil" label="Solo contar dias habiles" :error="$errors->first('modelo_editar.dia_habil')" class="flex gap-3 items-center">
+
+                <x-checkbox wire:model="modelo_editar.dia_habil"/>
+
+            </x-input-group>
 
         </x-slot>
 

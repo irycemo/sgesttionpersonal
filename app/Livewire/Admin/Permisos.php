@@ -25,7 +25,8 @@ class Permisos extends Component
             'modelo_editar.descripcion' => 'required',
             'modelo_editar.limite' => 'required|numeric',
             'modelo_editar.tipo' => 'required|string|in:personal,oficial',
-            'modelo_editar.tiempo' => 'required|numeric'
+            'modelo_editar.tiempo' => 'required|numeric',
+            'modelo_editar.dia_habil' => 'required'
          ];
     }
 

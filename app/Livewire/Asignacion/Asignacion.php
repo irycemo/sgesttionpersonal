@@ -108,18 +108,18 @@ class Asignacion extends Component
             $permisoAsignado = PermisoPersona::where('persona_id', $this->empleado_id)
                                                 ->where('fecha_inicio', '>=', Carbon::parse($this->fecha_inicial)->format('Y-m-d') . ' 00:00:00')
                                                 ->where('fecha_final', '<=', Carbon::parse($this->fecha_final)->format('Y-m-d') . ' 23:59:59')
-                                                ->first();
+                                                ->get();
 
         }else{
 
             $permisoAsignado = PermisoPersona::where('persona_id', $this->empleado_id)
                                                 ->where('fecha_inicio', '>=', Carbon::parse($this->fecha_inicial)->format('Y-m-d') . ' 00:00:00')
                                                 ->where('fecha_final', '<=', Carbon::parse($this->fecha_inicial)->format('Y-m-d') . ' 23:59:59')
-                                                ->first();
+                                                ->get();
 
         }
 
-        if($permisoAsignado) throw new Exception('Ya tiene un permiso asignado que cobre esa fecha.');
+        if($permisoAsignado->count() >= 2) throw new Exception('Ya tiene dos permisos asignados que cobren esa fecha.');
 
     }
 
@@ -135,14 +135,14 @@ class Asignacion extends Component
 
                 $final->addDay();
 
-                $inhabil = Inhabil::whereDate('fecha', $final->format('Y-m-d'))->first();
+                /* $inhabil = Inhabil::whereDate('fecha', $final->format('Y-m-d'))->first();
 
                 while($inhabil != null){
 
                     $final->addDay();
                     $inhabil = Inhabil::whereDate('fecha', $final->format('Y-m-d'))->first();
 
-                }
+                } */
 
                 while($final->isWeekend()){
 
@@ -158,10 +158,12 @@ class Asignacion extends Component
 
         }
 
+        /* dd($final); */
+
         PermisoPersona::create([
             'creado_por' => auth()->id(),
             'fecha_inicio' => $this->fecha_inicial,
-            'fecha_final' => $final->toDateString(),
+            'fecha_final' => $final->format('Y-m-d'),
             'permiso_id' => $this->permiso_id,
             'persona_id' => $this->empleado_id
         ]);
@@ -169,7 +171,7 @@ class Asignacion extends Component
         (new JustificacionService())->justificarFalta(
                                             $this->empleado_id,
                                             $this->fecha_inicial,
-                                            $final->toDateString(),
+                                            $final->format('Y-m-d'),
                                             "Se justifica falta mediante permiso " .
                                             $this->permiso_seleccionado->tipo . " " .
                                             $this->permiso_seleccionado->descripcion .
@@ -180,7 +182,7 @@ class Asignacion extends Component
         (new JustificacionService())->justificarRetardo(
                                         $this->empleado_id,
                                         $this->fecha_inicial,
-                                        $final->toDateString(),
+                                        $final->format('Y-m-d'),
                                         "Se justifica falta mediante permiso " .
                                         $this->permiso_seleccionado->tipo . " " .
                                         $this->permiso_seleccionado->descripcion .
@@ -189,7 +191,7 @@ class Asignacion extends Component
                                     );
 
         $incidencias = Incidencia::where('persona_id', $this->empleado_id)
-                                    ->whereBetween('created_at', [$this->fecha_inicial, $final->toDateString()])
+                                    ->whereBetween('created_at', [$this->fecha_inicial, $final->toDateString() . ' 23:59:59'])
                                     ->get();
 
         foreach ($incidencias as $incidencia) {
@@ -254,7 +256,7 @@ class Asignacion extends Component
                                     );
 
         $incidencia = Incidencia::where('persona_id', $this->empleado_id)
-                                    ->whereDate('created_at', Carbon::parse($this->fecha_inicial)->format('Y-m-d'))
+                                    ->whereDate('created_at', Carbon::parse($this->fecha_inicial)->format('Y-m-d') . ' 23:59:59')
                                     ->first();
 
         if($incidencia) $incidencia->delete();

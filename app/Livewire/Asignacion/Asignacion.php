@@ -135,7 +135,7 @@ class Asignacion extends Component
 
                 $final->addDay();
 
-                if($this->permiso_seleccionado->tiempo->dia_habil){
+                if($this->permiso_seleccionado->dia_habil){
 
                     $inhabil = Inhabil::whereDate('fecha', $final->format('Y-m-d'))->first();
 

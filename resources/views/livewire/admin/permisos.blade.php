@@ -48,6 +48,7 @@
                 <x-table.heading sortable wire:click="sortBy('limite')" :direction="$sort === 'limite' ? $direction : null">Límite</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('tipo')" :direction="$sort === 'tipo' ? $direction : null">Tipo</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('tiempo')" :direction="$sort === 'tiempo' ? $direction : null">Tiempo</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('dia_habil')" :direction="$sort === 'dia_habil' ? $direction : null">Dias habiles</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('created_at')" :direction="$sort === 'created_at' ? $direction : null">Registro</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('updated_at')" :direction="$sort === 'updated_at' ? $direction : null">Actualizado</x-table.heading>
                 <x-table.heading >Acciones</x-table.heading>
@@ -95,6 +96,14 @@
                             @else
                                     {{ $permiso->tiempo / 24 }} Días
                             @endif
+
+                        </x-table.cell>
+
+                        <x-table.cell>
+
+                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Dias habiles</span>
+
+                            {{ $permiso->dia_habil ? 'Si' : 'No' }}
 
                         </x-table.cell>
 

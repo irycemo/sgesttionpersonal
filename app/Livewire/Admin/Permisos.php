@@ -26,7 +26,7 @@ class Permisos extends Component
             'modelo_editar.limite' => 'required|numeric',
             'modelo_editar.tipo' => 'required|string|in:personal,oficial',
             'modelo_editar.tiempo' => 'required|numeric',
-            'modelo_editar.dia_habil' => 'required'
+            'modelo_editar.dia_habil' => 'required|boolean'
          ];
     }
 
@@ -35,7 +35,7 @@ class Permisos extends Component
     ];
 
     public function crearModeloVacio(){
-        $this->modelo_editar = Permiso::make();
+        $this->modelo_editar = Permiso::make(['dia_habil' => false]);
     }
 
     public function abrirModalEditar(Permiso $modelo){

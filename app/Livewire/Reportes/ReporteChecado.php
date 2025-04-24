@@ -7,7 +7,9 @@ use App\Models\Persona;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Constantes\Constantes;
+use App\Exports\ChecadosExport;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReporteChecado extends Component
 {
@@ -38,11 +40,11 @@ class ReporteChecado extends Component
 
         try {
 
-            /* return Excel::download(new FaltasExport($this->falta_empleado, $this->falta_tipo, $this->fecha1, $this->fecha2), 'Reporte_de_faltas_' . now()->format('d-m-Y') . '.xlsx'); */
+            return Excel::download(new ChecadosExport($this->status, $this->empleado_id, $this->localidad, $this->area, $this->tipo, $this->horario_id, $this->fecha1, $this->fecha2), 'Reporte_de_faltas_' . now()->format('d-m-Y') . '.xlsx');
 
         } catch (\Throwable $th) {
 
-            Log::error("Error generar archivo de reporte de faltas por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th);
+            Log::error("Error generar archivo de reporte de checados por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th);
 
             $this->dispatchBrowserEvent('mostrarMensaje', ['error', "Ha ocurrido un error."]);
 

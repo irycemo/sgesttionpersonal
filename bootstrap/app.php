@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\EstaActivoMiddleware;
+use App\Http\Middleware\RedirectInvalidIpsMiddleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -19,7 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'esta.activo' => EstaActivoMiddleware::class,
             'role'=> RoleMiddleware::class,
-            'permission' => PermissionMiddleware::class
+            'permission' => PermissionMiddleware::class,
+            'valid.ips' => RedirectInvalidIpsMiddleware::class
         ]);
 
     })

@@ -72,4 +72,4 @@ Route::get('setpassword/{email}', [SetPasswordController::class, 'create'])->nam
 Route::post('setpassword', [SetPasswordController::class, 'store'])->name('setpassword.store');
 
 /* Chacador */
-Route::get('checador', ChecadorController::class)->middleware('valid.ips')->name('checador');
+Route::get('checador', ChecadorController::class)->name('checador');

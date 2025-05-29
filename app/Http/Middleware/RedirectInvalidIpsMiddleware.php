@@ -11,8 +11,7 @@ class RedirectInvalidIpsMiddleware
 {
 
     protected $ips = [
-        '65.202.143.122',
-        '148.185.163.203'
+        '10.24.188.91',
     ];
 
     protected $ipRanges = [

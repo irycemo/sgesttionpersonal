@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
 
         Model::shouldBeStrict();
 
-        if(env('LOCAL') === "1"){
+        if(config('services.ses.flag')){
 
             URL::forceScheme('https');
 
@@ -38,17 +38,7 @@ class AppServiceProvider extends ServiceProvider
             });
 
             Livewire::setUpdateRoute(function ($handle) {
-                return Route::post('/sgesttionpersonal/public/livewire/update', $handle);
-            });
-
-        }elseif(env('LOCAL') === "0"){
-
-            Livewire::setScriptRoute(function ($handle) {
-                return Route::get('/sgesttionpersonal/public/vendor/livewire/livewire.js', $handle);
-            });
-
-            Livewire::setUpdateRoute(function ($handle) {
-                return Route::post('/sgesttionpersonal/public/livewire/update', $handle);
+                return Route::post('/sgesttionpersonal/livewire/update', $handle);
             });
 
         }

@@ -63,8 +63,6 @@ Route::group(['middleware' => ['auth', 'esta.activo']], function(){
     /* Asignación */
     Route::get('asignacion', Asignacion::class)->middleware('permission:Asignación')->name('asignacion');
 
-    Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
-
 });
 
 

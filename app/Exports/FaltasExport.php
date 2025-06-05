@@ -110,10 +110,10 @@ class FaltasExport implements FromCollection,  WithProperties, WithDrawings, Sho
     {
         return [
             AfterSheet::class => function(AfterSheet $event) {
-                $event->sheet->mergeCells('A1:D1');
+                $event->sheet->mergeCells('A1:J1');
                 $event->sheet->setCellValue('A1', "Instituto Registral Y Catastral Del Estado De Michoacán De Ocampo\nReporte de faltas (Sistema de Gestión Personal)\n" . now()->format('d-m-Y'));
                 $event->sheet->getStyle('A1')->getAlignment()->setWrapText(true);
-                $event->sheet->getStyle('A1:D1')->applyFromArray([
+                $event->sheet->getStyle('A1:J1')->applyFromArray([
                     'font' => [
                         'bold' => true,
                         'size' => 13

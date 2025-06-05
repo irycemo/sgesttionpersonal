@@ -74,7 +74,7 @@ class CalcularTiempoPermisos extends Command
 
                         }
 
-                        $empleado->incidencias->create([
+                        $empleado->incidencias()->create([
                                             'tipo' => 'Se descuenta un permiso de día económico debido al tiempo consumido por permisos personales e incidencias.',
                                             'status' => 1
                                         ]);

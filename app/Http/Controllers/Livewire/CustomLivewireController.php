@@ -15,7 +15,7 @@ class CustomLivewireController extends FileUploadController
 
         $filePaths = $this->validateAndStore(request('files'), $disk);
 
-        return ['paths', $filePaths];
+        return ['paths' => $filePaths];
 
     }
 

@@ -23,17 +23,9 @@ class LivewireOverrideServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        $this->overrideRoutes();
-
         if(config('services.ses.flag')){
 
-            Livewire::setScriptRoute(function ($handle) {
-                return Route::get('/sgesttionpersonal/public/vendor/livewire/livewire.js', $handle);
-            });
-
-            Livewire::setUpdateRoute(function ($handle) {
-                return Route::post('/sgesttionpersonal/livewire/update', $handle);
-            });
+            $this->overrideRoutes();
 
         }
 

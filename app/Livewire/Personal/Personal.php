@@ -211,27 +211,32 @@ class Personal extends Component
     {
 
         $personas = Persona::with('horario', 'creadoPor', 'actualizadoPor')
-                                ->where('numero_empleado', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('nombre', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('status', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('ap_paterno', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('ap_materno', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('codigo_barras', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('localidad', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('area', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('tipo', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('rfc', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('curp', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('telefono', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('domicilio', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('email', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere('fecha_ingreso', 'LIKE', '%' . $this->search . '%')
-                                ->orWhere(function($q){
-                                    return $q->whereHas('horario', function($q){
-                                        return $q->where('tipo', 'LIKE', '%' . $this->search . '%');
-                                    });
+                                ->when(auth()->user()->hasRole(['Jefe de departamento']), function($q){
+                                    $q->where('area', auth()->user()->ubicacion);
                                 })
-                                ->orWhere('observaciones', 'LIKE', '%' . $this->search . '%')
+                                ->where(function($q){
+                                    $q->where('numero_empleado', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('nombre', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('status', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('ap_paterno', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('ap_materno', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('codigo_barras', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('localidad', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('area', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('tipo', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('rfc', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('curp', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('telefono', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('domicilio', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('email', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere('fecha_ingreso', 'LIKE', '%' . $this->search . '%')
+                                    ->orWhere(function($q){
+                                        return $q->whereHas('horario', function($q){
+                                            return $q->where('tipo', 'LIKE', '%' . $this->search . '%');
+                                        });
+                                    })
+                                    ->orWhere('observaciones', 'LIKE', '%' . $this->search . '%');
+                                })
                                 ->orderBy($this->sort, $this->direction)
                                 ->paginate($this->pagination);
 

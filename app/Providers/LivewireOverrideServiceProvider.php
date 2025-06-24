@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Livewire\Livewire;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use App\Http\Controllers\Livewire\CustomLivewireController;

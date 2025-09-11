@@ -1,5 +1,13 @@
 <div>
 
+    <div>
+
+        <p class="font-semibold">Total de empleados activos: {{ $personalTotal }}</p>
+
+        <p class="font-semibold">Total de empleados presentes: {{ $personalPresente }}</p>
+
+    </div>
+
     <button wire:click="consultarFaltantes" class="rounded-full border w-full md:w-auto mt-3 border-gray-600 py-1 px-4 text-gray-500 hover:bg-gray-600 hover:text-white transition-all ease-in-out">Faltantes</button>
 
     <x-dialog-modal wire:model="modal">

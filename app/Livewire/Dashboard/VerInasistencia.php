@@ -5,6 +5,7 @@ namespace App\Livewire\Dashboard;
 use Carbon\Carbon;
 use App\Models\Persona;
 use Livewire\Component;
+use App\Models\Checador;
 
 class VerInasistencia extends Component
 {
@@ -15,6 +16,23 @@ class VerInasistencia extends Component
     public $empleados = [];
 
     public $modal = false;
+
+    public function placeholder()
+    {
+        return view('livewire.dashboard.ver-inasistencia-placeholder');
+    }
+
+    public function mount(){
+
+        $this->personalTotal = Persona::where('status', 'activo')->where('localidad', $this->localidad)->count();
+
+        $this->personalPresente = Checador::whereDay('created_at', Carbon::today())
+                                                ->whereHas('persona', function($q){
+                                                    $q->where('localidad', $this->localidad);
+                                                })
+                                                ->count();
+
+    }
 
     public function consultarFaltantes(){
 

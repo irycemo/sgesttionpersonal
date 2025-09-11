@@ -164,43 +164,56 @@ class Asignacion extends Component
 
         /* dd($final); */
 
-        PermisoPersona::create([
-            'creado_por' => auth()->id(),
-            'fecha_inicio' => $this->fecha_inicial,
-            'fecha_final' => $final->format('Y-m-d'),
-            'permiso_id' => $this->permiso_id,
-            'persona_id' => $this->empleado_id
-        ]);
+        try {
 
-        (new JustificacionService())->justificarFalta(
-                                            $this->empleado_id,
-                                            $this->fecha_inicial,
-                                            $final->format('Y-m-d'),
-                                            "Se justifica falta mediante permiso " .
-                                            $this->permiso_seleccionado->tipo . " " .
-                                            $this->permiso_seleccionado->descripcion .
-                                            " registrado por: " . auth()->user()->name .
-                                            " con fecha de " . now()->format('d-m-Y H:i:s')
-                                        );
+            DB::transaction(function () use ($final){
 
-        (new JustificacionService())->justificarRetardo(
-                                        $this->empleado_id,
-                                        $this->fecha_inicial,
-                                        $final->format('Y-m-d'),
-                                        "Se justifica falta mediante permiso " .
-                                        $this->permiso_seleccionado->tipo . " " .
-                                        $this->permiso_seleccionado->descripcion .
-                                        " registrado por: " . auth()->user()->name .
-                                        " con fecha de " . now()->format('d-m-Y H:i:s')
-                                    );
+                PermisoPersona::create([
+                    'creado_por' => auth()->id(),
+                    'fecha_inicio' => $this->fecha_inicial,
+                    'fecha_final' => $final->format('Y-m-d'),
+                    'permiso_id' => $this->permiso_id,
+                    'persona_id' => $this->empleado_id
+                ]);
 
-        $incidencias = Incidencia::where('persona_id', $this->empleado_id)
-                                    ->whereBetween('created_at', [$this->fecha_inicial, $final->toDateString() . ' 23:59:59'])
-                                    ->get();
+                (new JustificacionService())->justificarFalta(
+                                                    $this->empleado_id,
+                                                    $this->fecha_inicial,
+                                                    $final->format('Y-m-d'),
+                                                    "Se justifica falta mediante permiso " .
+                                                    $this->permiso_seleccionado->tipo . " " .
+                                                    $this->permiso_seleccionado->descripcion .
+                                                    " registrado por: " . auth()->user()->name .
+                                                    " con fecha de " . now()->format('d-m-Y H:i:s')
+                                                );
 
-        foreach ($incidencias as $incidencia) {
+                (new JustificacionService())->justificarRetardo(
+                                                $this->empleado_id,
+                                                $this->fecha_inicial,
+                                                $final->format('Y-m-d'),
+                                                "Se justifica falta mediante permiso " .
+                                                $this->permiso_seleccionado->tipo . " " .
+                                                $this->permiso_seleccionado->descripcion .
+                                                " registrado por: " . auth()->user()->name .
+                                                " con fecha de " . now()->format('d-m-Y H:i:s')
+                                            );
 
-            $incidencia->delete();
+                $incidencias = Incidencia::where('persona_id', $this->empleado_id)
+                                            ->whereBetween('created_at', [$this->fecha_inicial, $final->toDateString() . ' 23:59:59'])
+                                            ->get();
+
+                foreach ($incidencias as $incidencia) {
+
+                    $incidencia->delete();
+
+                }
+
+            });
+
+        } catch (\Throwable $th) {
+
+            Log::error("Error al asignar permiso oficial por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th);
+            $this->dispatch('mostrarMensaje', ['error', "Ha ocurrido un error."]);
 
         }
 
@@ -208,62 +221,75 @@ class Asignacion extends Component
 
     public function asignarPermisoPersonal(){
 
-        $ff = Carbon::parse($this->fecha_final);
-        $fi = Carbon::parse($this->fecha_inicial);
+        try {
 
-        if($this->empleado_seleccionado->localidad === 'Catastro'){
+            DB::transaction(function (){
 
-            PermisoPersona::create([
-                'creado_por' => auth()->id(),
-                'fecha_inicio' => $this->fecha_inicial,
-                'fecha_final' => $this->fecha_final,
-                'permiso_id' => $this->permiso_id,
-                'persona_id' => $this->empleado_id,
-                'tiempo_consumido' => $fi->diffInMinutes($ff)
-            ]);
+                $ff = Carbon::parse($this->fecha_final);
+                $fi = Carbon::parse($this->fecha_inicial);
 
-        }else{
+                if($this->empleado_seleccionado->localidad === 'Catastro'){
+
+                    PermisoPersona::create([
+                        'creado_por' => auth()->id(),
+                        'fecha_inicio' => $this->fecha_inicial,
+                        'fecha_final' => $this->fecha_final,
+                        'permiso_id' => $this->permiso_id,
+                        'persona_id' => $this->empleado_id,
+                        'tiempo_consumido' => $fi->diffInMinutes($ff)
+                    ]);
+
+                }else{
 
 
-            if(now()->isSameDay($this->fecha_inicial)){
+                    if(now()->isSameDay($this->fecha_inicial)){
 
-                PermisoPersona::create([
-                    'creado_por' => auth()->id(),
-                    'fecha_inicio' => $this->fecha_inicial,
-                    'permiso_id' => $this->permiso_id,
-                    'persona_id' => $this->empleado_id
-                ]);
+                        PermisoPersona::create([
+                            'creado_por' => auth()->id(),
+                            'fecha_inicio' => $this->fecha_inicial,
+                            'permiso_id' => $this->permiso_id,
+                            'persona_id' => $this->empleado_id
+                        ]);
 
-            }else{
+                    }else{
 
-                PermisoPersona::create([
-                    'creado_por' => auth()->id(),
-                    'fecha_inicio' => $this->fecha_inicial,
-                    'fecha_final' => $this->fecha_inicial,
-                    'permiso_id' => $this->permiso_id,
-                    'persona_id' => $this->empleado_id,
-                    'tiempo_consumido' => $this->tiempoConsumido()
-                ]);
-            }
+                        PermisoPersona::create([
+                            'creado_por' => auth()->id(),
+                            'fecha_inicio' => $this->fecha_inicial,
+                            'fecha_final' => $this->fecha_inicial,
+                            'permiso_id' => $this->permiso_id,
+                            'persona_id' => $this->empleado_id,
+                            'tiempo_consumido' => $this->tiempoConsumido()
+                        ]);
+                    }
+
+                }
+
+                (new JustificacionService())->justificar(
+                                                $this->empleado_id,
+                                                Carbon::parse($this->fecha_inicial)->format('Y-m-d'),
+                                                Carbon::parse($this->fecha_inicial)->format('Y-m-d'),
+                                                "Se justifica falta mediante permiso " .
+                                                $this->permiso_seleccionado->tipo . " " .
+                                                $this->permiso_seleccionado->descripcion .
+                                                " registrado por: " . auth()->user()->name .
+                                                " con fecha de " . now()->format('d-m-Y H:i:s')
+                                            );
+
+                $incidencia = Incidencia::where('persona_id', $this->empleado_id)
+                                            ->whereDate('created_at', Carbon::parse($this->fecha_inicial)->format('Y-m-d') . ' 23:59:59')
+                                            ->first();
+
+                if($incidencia) $incidencia->delete();
+
+            });
+
+        } catch (\Throwable $th) {
+
+            Log::error("Error al asignar permiso personal por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th);
+            $this->dispatch('mostrarMensaje', ['error', "Ha ocurrido un error."]);
 
         }
-
-        (new JustificacionService())->justificar(
-                                        $this->empleado_id,
-                                        Carbon::parse($this->fecha_inicial)->format('Y-m-d'),
-                                        Carbon::parse($this->fecha_inicial)->format('Y-m-d'),
-                                        "Se justifica falta mediante permiso " .
-                                        $this->permiso_seleccionado->tipo . " " .
-                                        $this->permiso_seleccionado->descripcion .
-                                        " registrado por: " . auth()->user()->name .
-                                        " con fecha de " . now()->format('d-m-Y H:i:s')
-                                    );
-
-        $incidencia = Incidencia::where('persona_id', $this->empleado_id)
-                                    ->whereDate('created_at', Carbon::parse($this->fecha_inicial)->format('Y-m-d') . ' 23:59:59')
-                                    ->first();
-
-        if($incidencia) $incidencia->delete();
 
     }
 

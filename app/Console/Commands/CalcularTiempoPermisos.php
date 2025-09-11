@@ -36,12 +36,13 @@ class CalcularTiempoPermisos extends Command
             foreach($empleados as $empleado){
 
                 $permisos = $empleado->permisos()->where('tipo', 'personal')
-                                                ->where('tiempo_consumido','!=', null)
+                                                ->whereNotNull('tiempo_consumido')
                                                 ->whereNull('status')
                                                 ->whereYear('permiso_persona.created_at', Carbon::now()->year)
                                                 ->get();
 
-                $incidencias = $empleado->incidencias()->where('tiempo_consumido','!=', null)
+                $incidencias = $empleado->incidencias()
+                                                ->where('tiempo_consumido','!=', null)
                                                 ->whereYear('created_at', Carbon::now()->year)
                                                 ->where('status', false)
                                                 ->get();
@@ -50,13 +51,13 @@ class CalcularTiempoPermisos extends Command
 
                 foreach ($permisos as $permiso) {
 
-                    $min = $min + $permiso->pivot->tiempo_consumido;
+                    $min = $min + abs($permiso->pivot->tiempo_consumido);
 
                 }
 
                 foreach ($incidencias as $incidencia) {
 
-                    $min = $min + $incidencia->tiempo_consumido;
+                    $min = $min + abs($incidencia->tiempo_consumido);
 
                 }
 
@@ -82,7 +83,7 @@ class CalcularTiempoPermisos extends Command
                         foreach($permisos as $permiso){
 
                             $permiso->pivot->status = 1;
-                            $permiso->save();
+                            $permiso->pivot->save();
 
                         }
 

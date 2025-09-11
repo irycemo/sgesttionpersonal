@@ -50,7 +50,7 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Tiempo consumido</span>
 
-                                {{ $incidencia->tiempo_consumido }} min. @if($incidencia->status)<span class="bg-gray-400 text-white rounded-full px-2 py-1 text-xs">Contabilizado</span>@endif
+                                {{ abs($incidencia->tiempo_consumido) }} min. @if($incidencia->status)<span class="bg-gray-400 text-white rounded-full px-2 py-1 text-xs">Contabilizado</span>@endif
 
                             </td>
 

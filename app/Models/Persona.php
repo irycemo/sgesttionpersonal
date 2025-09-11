@@ -78,7 +78,10 @@ class Persona extends Model implements Auditable
 
     public function tiempoConsumidoIncidencias(){
 
-        return $this->incidencias()->where('status', false)->whereYear('created_at', Carbon::now()->year)->sum('tiempo_consumido');
+        return $this->incidencias()
+                    ->where('status', false)
+                    ->whereYear('created_at', Carbon::now()->year)
+                    ->sum('tiempo_consumido');
 
     }
 

@@ -148,8 +148,8 @@
 
                     <p class="tracking-widest font-semibold text-lg">Tiempo consumido (año actual)</p>
 
-                    <p>Permisos: {{ $persona->tiempoConsumidoPermisos() }} min.</p>
-                    <p>Incidencias: {{ $persona->tiempoConsumidoIncidencias() }} min.</p>
+                    <p>Permisos: {{ abs($persona->tiempoConsumidoPermisos()) }} min.</p>
+                    <p>Incidencias: {{ abs($persona->tiempoConsumidoIncidencias()) }} min.</p>
 
                 </div>
 
@@ -350,5 +350,5 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
 @endpush

@@ -72,6 +72,7 @@ class FullCalendar extends Component
                 'start' => Carbon::parse($justificacion->created_at)->format('Y-m-d'),
                 'registrado_por' => $justificacion->creadoPor->name,
                 'falta' => $justificacion->falta?->created_at,
+                'tipo_falta' => $justificacion->falta?->tipo,
                 'retardo' => $justificacion->retardo?->created_at,
                 'color' =>  '#00C49A'
             ];
@@ -114,7 +115,8 @@ class FullCalendar extends Component
             $eventos [] = [
                 'title' => 'Falta',
                 'start' => Carbon::parse($falta->created_at)->format('Y-m-d'),
-                'color' =>  '#F8C06C'
+                'color' =>  '#F8C06C',
+                'tipo' => $falta->tipo
             ];
 
         }

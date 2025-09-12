@@ -78,6 +78,12 @@
 
                             </div>
 
+                            <div class="rounded-lg bg-gray-100 py-1 px-2">
+
+                                <p><strong>Tipo:</strong> {{ $evento['extendedProps']['tipo_falta'] }}</p>
+
+                            </div>
+
                         @else
 
                             <div class="rounded-lg bg-gray-100 py-1 px-2">
@@ -123,6 +129,12 @@
                         <div class="rounded-lg bg-gray-100 py-1 px-2">
 
                             <p><strong>Fecha inicial:</strong> {{ $evento['start'] }}</p>
+
+                        </div>
+
+                        <div class="rounded-lg bg-gray-100 py-1 px-2">
+
+                            <p><strong>Tipo:</strong> {{ $evento['extendedProps']['tipo'] }}</p>
 
                         </div>
 

@@ -162,7 +162,9 @@ class Asignacion extends Component
 
         }
 
-        /* dd($final); */
+        $this->fecha_inicial = $this->fecha_inicial->format('Y-m-d') . ' 00:00:00';
+
+        $final = $final->format('Y-m-d') . ' 23:59:59';
 
         try {
 
@@ -171,7 +173,7 @@ class Asignacion extends Component
                 PermisoPersona::create([
                     'creado_por' => auth()->id(),
                     'fecha_inicio' => $this->fecha_inicial,
-                    'fecha_final' => $final->format('Y-m-d'),
+                    'fecha_final' => $final,
                     'permiso_id' => $this->permiso_id,
                     'persona_id' => $this->empleado_id
                 ]);
@@ -179,7 +181,7 @@ class Asignacion extends Component
                 (new JustificacionService())->justificarFalta(
                                                     $this->empleado_id,
                                                     $this->fecha_inicial,
-                                                    $final->format('Y-m-d'),
+                                                    $final,
                                                     "Se justifica falta mediante permiso " .
                                                     $this->permiso_seleccionado->tipo . " " .
                                                     $this->permiso_seleccionado->descripcion .
@@ -190,7 +192,7 @@ class Asignacion extends Component
                 (new JustificacionService())->justificarRetardo(
                                                 $this->empleado_id,
                                                 $this->fecha_inicial,
-                                                $final->format('Y-m-d'),
+                                                $final,
                                                 "Se justifica falta mediante permiso " .
                                                 $this->permiso_seleccionado->tipo . " " .
                                                 $this->permiso_seleccionado->descripcion .
@@ -199,7 +201,7 @@ class Asignacion extends Component
                                             );
 
                 $incidencias = Incidencia::where('persona_id', $this->empleado_id)
-                                            ->whereBetween('created_at', [$this->fecha_inicial, $final->toDateString() . ' 23:59:59'])
+                                            ->whereBetween('created_at', [$this->fecha_inicial, $final])
                                             ->get();
 
                 foreach ($incidencias as $incidencia) {

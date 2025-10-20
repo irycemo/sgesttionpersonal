@@ -172,7 +172,11 @@ class Justificaciones extends Component
 
             if($this->documento){
 
-                Storage::disk('justificacion')->delete($this->modelo_editar->documento);
+                if($this->modelo_editar->documento){
+
+                    Storage::disk('justificacion')->delete($this->modelo_editar->documento);
+
+                }
 
                 $nombreArchivo = $this->documento->store('/', 'justificacion');
 

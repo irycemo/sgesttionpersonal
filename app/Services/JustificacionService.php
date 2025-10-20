@@ -22,7 +22,7 @@ class JustificacionService{
 
         $faltas = Falta::where('persona_id', $personaId)
                             ->whereNull('justificacion_id')
-                            ->whereBetween('created_at', [$fechaInicial . ' 00:00:00', $fechaFinal . ' 23:59:59'])
+                            ->whereBetween('created_at', [$fechaInicial, $fechaFinal])
                             ->get();
 
         foreach ($faltas as $falta) {
@@ -40,7 +40,7 @@ class JustificacionService{
 
         $retardos = Retardo::where('persona_id', $personaId)
                             ->whereNull('justificacion_id')
-                            ->whereBetween('created_at', [$fechaInicial . ' 00:00:00', $fechaFinal . ' 23:59:59'])
+                            ->whereBetween('created_at', [$fechaInicial, $fechaFinal])
                             ->get();
 
         foreach ($retardos as $retardo) {

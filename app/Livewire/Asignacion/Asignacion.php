@@ -162,7 +162,7 @@ class Asignacion extends Component
 
         }
 
-        $this->fecha_inicial = $this->fecha_inicial->format('Y-m-d') . ' 00:00:00';
+        $this->fecha_inicial = $this->fecha_inicial . ' 00:00:00';
 
         $final = $final->format('Y-m-d') . ' 23:59:59';
 

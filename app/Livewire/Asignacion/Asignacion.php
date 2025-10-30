@@ -170,14 +170,6 @@ class Asignacion extends Component
 
             DB::transaction(function () use ($final){
 
-                PermisoPersona::create([
-                    'creado_por' => auth()->id(),
-                    'fecha_inicio' => $this->fecha_inicial,
-                    'fecha_final' => $final,
-                    'permiso_id' => $this->permiso_id,
-                    'persona_id' => $this->empleado_id
-                ]);
-
                 (new JustificacionService())->justificarFalta(
                                                     $this->empleado_id,
                                                     $this->fecha_inicial,
@@ -209,6 +201,14 @@ class Asignacion extends Component
                     $incidencia->delete();
 
                 }
+
+                PermisoPersona::create([
+                    'creado_por' => auth()->id(),
+                    'fecha_inicio' => $this->fecha_inicial,
+                    'fecha_final' => $final,
+                    'permiso_id' => $this->permiso_id,
+                    'persona_id' => $this->empleado_id
+                ]);
 
             });
 
@@ -269,8 +269,8 @@ class Asignacion extends Component
 
                 (new JustificacionService())->justificar(
                                                 $this->empleado_id,
-                                                Carbon::parse($this->fecha_inicial)->format('Y-m-d'),
-                                                Carbon::parse($this->fecha_inicial)->format('Y-m-d'),
+                                                $this->fecha_inicial,
+                                                $this->fecha_inicial,
                                                 "Se justifica falta mediante permiso " .
                                                 $this->permiso_seleccionado->tipo . " " .
                                                 $this->permiso_seleccionado->descripcion .

@@ -95,7 +95,8 @@ class Checador extends Component
         $ch = CH::create([
             'hora' => $hora,
             'tipo' => $tipo,
-            'persona_id' => $this->persona->id
+            'persona_id' => $this->persona->id,
+            'ip' => request()->ip()
         ]);
 
         $this->dispatch('mostrarMensaje', ['success', "Registro exitoso."]);

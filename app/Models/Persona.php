@@ -90,7 +90,7 @@ class Persona extends Model implements Auditable
         return $this->permisos2()
                         ->whereYear('created_at', Carbon::now()->year)
                         ->whereHas('permiso', function($q){
-                            $q->where('descripcion','PERMISO ECONÓMICO');
+                            $q->whereIn('descripcion',['ECONOMICO 2d', 'ECONOMICO POR TIEMPO PERSONAL', 'ECONOMICO 3d', 'ECONÓMICO 1d']);
                         })
                         ->count();
     }

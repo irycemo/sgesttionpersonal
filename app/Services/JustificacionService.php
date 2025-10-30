@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Models\Falta;
 use App\Models\Retardo;
 use App\Models\Justificacion;
@@ -22,7 +23,7 @@ class JustificacionService{
 
         $faltas = Falta::where('persona_id', $personaId)
                             ->whereNull('justificacion_id')
-                            ->whereBetween('created_at', [$fechaInicial, $fechaFinal])
+                            ->whereBetween('created_at', [Carbon::parse($fechaInicial)->startOfDay(), Carbon::parse($fechaFinal)->endOfDay()])
                             ->get();
 
         foreach ($faltas as $falta) {
@@ -40,7 +41,7 @@ class JustificacionService{
 
         $retardos = Retardo::where('persona_id', $personaId)
                             ->whereNull('justificacion_id')
-                            ->whereBetween('created_at', [$fechaInicial, $fechaFinal])
+                            ->whereBetween('created_at', [Carbon::parse($fechaInicial)->startOfDay(), Carbon::parse($fechaFinal)->endOfDay()])
                             ->get();
 
         foreach ($retardos as $retardo) {

@@ -59,7 +59,7 @@ class RevisarAsistencias extends Command
                                             ->whereDate('fecha_final', '>=', Carbon::yesterday()->toDateString())
                                             ->first();
 
-                    if($permiso && $permiso->tiempo >= 24)
+                    if($permiso)
                         continue;
 
                     if($incapacidad)

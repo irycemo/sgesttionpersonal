@@ -12,7 +12,7 @@
 
                 <x-input-select class="bg-white rounded-full text-sm w-min" wire:model.live="filters.horario">
 
-                    <option value="10">Horario</option>
+                    <option value="">Horario</option>
 
                     @foreach ($horarios as $horario)
 

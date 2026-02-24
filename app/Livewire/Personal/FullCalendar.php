@@ -79,7 +79,7 @@ class FullCalendar extends Component
 
             $eventos [] = [
                 'title' => 'Jutificación',
-                'start' => $start->format('Y-m-d'),
+                'start' => Carbon::parse($start)->format('Y-m-d'),
                 'registrado_por' => $justificacion->creadoPor->name,
                 'falta' => $justificacion->falta?->created_at,
                 'tipo_falta' => $justificacion->falta?->tipo,

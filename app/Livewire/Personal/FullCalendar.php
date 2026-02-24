@@ -67,9 +67,19 @@ class FullCalendar extends Component
 
         foreach ($justificaciones as $justificacion) {
 
+            if($justificacion->falta){
+
+                $start = $justificacion->falta->created_at;
+
+            }elseif($justificacion->retardo){
+
+                $start = $justificacion->retardo->created_at;
+
+            }
+
             $eventos [] = [
                 'title' => 'Jutificación',
-                'start' => Carbon::parse($justificacion->created_at)->format('Y-m-d'),
+                'start' => $start->format('Y-m-d'),
                 'registrado_por' => $justificacion->creadoPor->name,
                 'falta' => $justificacion->falta?->created_at,
                 'tipo_falta' => $justificacion->falta?->tipo,

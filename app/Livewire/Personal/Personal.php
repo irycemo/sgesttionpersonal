@@ -27,6 +27,10 @@ class Personal extends Component
     public $tipos;
     public $foto;
 
+    public $filters = [
+        'horario' => ''
+    ];
+
     protected $queryString = ['search'];
 
     protected function rules(){
@@ -74,6 +78,8 @@ class Personal extends Component
         'modelo_editar.codigo_barras' => 'código de barras',
         'modelo_editar.area' => 'área',
     ];
+
+    public function updatedFilters() { $this->resetPage(); }
 
     public function crearModeloVacio(){
         $this->modelo_editar = Persona::make();
@@ -213,6 +219,9 @@ class Personal extends Component
         $personas = Persona::with('horario', 'creadoPor', 'actualizadoPor')
                                 ->when(auth()->user()->hasRole(['Jefe de departamento']), function($q){
                                     $q->where('area', auth()->user()->ubicacion);
+                                })
+                                ->when(strlen($this->filters['horario']) > 0, function($q){
+                                    $q->where('horario_id', $this->filters['horario']);
                                 })
                                 ->where(function($q){
                                     $q->where('numero_empleado', 'LIKE', '%' . $this->search . '%')

@@ -100,7 +100,7 @@ class Personal extends Component
 
         $this->validate();
 
-        $empleado = Persona::where('nombre', $this->modelo_editar->nombre)->where('ap_paterno', $this->modelo_editar->ap_paterno)->where('ap_materno', $this->modelo_editar->ap_materno)->first();
+        /* $empleado = Persona::where('nombre', $this->modelo_editar->nombre)->where('ap_paterno', $this->modelo_editar->ap_paterno)->where('ap_materno', $this->modelo_editar->ap_materno)->first();
 
         if($empleado){
 
@@ -110,7 +110,7 @@ class Personal extends Component
 
             return;
 
-        }
+        } */
 
         try {
 
